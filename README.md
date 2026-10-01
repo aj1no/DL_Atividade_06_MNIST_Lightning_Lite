@@ -10,7 +10,7 @@ Este repositório contém a implementação e resolução prática do exercício
 
 ---
 
-## 📌 Informações Acadêmicas
+## Informações Acadêmicas
 
 * **Curso:** Ciência de Dados
 * **Disciplina:** Aprendizado Profundo / Deep Learning
@@ -18,7 +18,7 @@ Este repositório contém a implementação e resolução prática do exercício
 
 ---
 
-## 🎯 Objetivos do Projeto
+## Objetivos do Projeto
 
 1. **Otimização por Minibatches:** Compreender a dinâmica do Gradiente Descendente Estocástico (SGD) operando em lotes de 50 amostras.
 2. **Abstrações do PyTorch:** Empregar as classes fundamentais `torch.utils.data.Dataset`, `DataLoader` e `torch.nn.Module`.
@@ -28,7 +28,7 @@ Este repositório contém a implementação e resolução prática do exercício
 
 ---
 
-## 🧠 Arquitetura do Modelo
+## Arquitetura do Modelo
 
 A rede neural implementada consiste em um Perceptron Multicamadas (**MLP**):
 
@@ -48,15 +48,15 @@ Entrada: Imagem MNIST 28x28 (784 dimensões linearizadas)
 Saída: 10 Classes (Dígitos 0 a 9 via CrossEntropyLoss)
 ```
 
-- **Total de Parâmetros Treináveis:** $784 	imes 500 + 500 + 500 	imes 10 + 10 = \mathbf{397.510}$ parâmetros.
-- **Função de Custo:** `CrossEntropyLoss` (combina `LogSoftmax` e `NLLLoss`).
-- **Otimizador:** `SGD` (Taxa de Aprendizado $\eta = 0.1$).
+* **Total de Parâmetros Treináveis:** $784 \times 500 + 500 + 500 \times 10 + 10 = \mathbf{397.510}$ parâmetros.
+* **Função de Custo:** `CrossEntropyLoss` (combina `LogSoftmax` e `NLLLoss`).
+* **Otimizador:** `SGD` (Taxa de Aprendizado $\eta = 0.1$).
 
 ---
 
-## 📊 Estrutura do Framework "SuperLight"
+## Estrutura do Framework SuperLight
 
-```
+```text
 ┌─────────────────────────────────────────────────────────────┐
 │                    LightningModule                          │
 │ ├─ forward(x)                                               │
@@ -82,19 +82,19 @@ Saída: 10 Classes (Dígitos 0 a 9 via CrossEntropyLoss)
 
 ---
 
-## 📈 Resultados Experimentais
+## Resultados Experimentais
 
 O modelo foi treinado por **20 épocas** com batch size 50 em **1.000 amostras** de treino e avaliado em **1.000 amostras** de teste isoladas:
 
-### Resumo das Métricas:
+### Resumo das Métricas
 
-| Métrica | Conjunto de Validação | Conjunto de Teste |
-| :--- | :---: | :---: |
-| **Cross-Entropy Loss** | 0.4199 | **0.4160** |
-| **Acurácia Final** | 87.50% | **87.60%** |
-| **Amostras Avaliadas** | 1.000 | 1.000 |
+| Etapa / Conjunto | Loss (Cross-Entropy) | Acurácia | Detalhes |
+| :--- | :---: | :---: | :--- |
+| **Treinamento** (20 épocas) | $1.7897 \rightarrow 0.1842$ | — | 1.000 amostras (SGD, $\eta=0.1$, batch=50) |
+| **Validação** (Melhor modelo) | 0.4199 | 87.50% | Checkpoint automático salvo (`best_model.pt`) |
+| **Teste** (Avaliação Final) | **0.4160** | **87.60%** | 1.000 amostras de teste isoladas |
 
-### Relatório Detalhado por Classe no Conjunto de Teste:
+### Relatório Detalhado por Classe no Conjunto de Teste
 
 ```text
               precision    recall  f1-score   support
@@ -117,7 +117,7 @@ weighted avg     0.8773    0.8760    0.8763      1000
 
 ---
 
-## 🔬 Principais Conclusões e Aprendizados
+## Principais Conclusões e Aprendizados
 
 1. **Eficiência da Amostragem por Minibatches:** O uso de $B=50$ permitiu passos de gradiente estáveis e convergência rápida em poucas épocas, evitando a lentidão do Batch Gradient Descent e a instabilidade excessiva do SGD com batch unitário ($B=1$).
 2. **Alta Capacidade de Generalização com Poucos Dados:** Atingir **87,60%** com apenas 1.000 instâncias de treino demonstra a eficácia do MLP com ativação ReLU em extrair fronteiras de decisão discriminantes sobre o espaço dos pixels.
@@ -125,35 +125,45 @@ weighted avg     0.8773    0.8760    0.8763      1000
 
 ---
 
-## 🚀 Como Executar Localmente
+## Ferramentas Utilizadas
 
-### 1. Clonar o repositório
-```bash
-git clone https://github.com/aj1no/DL_Atividade_06_MNIST_Lightning_Lite.git
-cd DL_Atividade_06_MNIST_Lightning_Lite
-```
+Em conformidade com a transparência acadêmica:
 
-### 2. Criar e ativar o ambiente virtual
-```bash
-python -m venv venv
-# No Windows:
-.\venv\Scripts\activate
-# No Linux/macOS:
-source venv/bin/activate
-```
-
-### 3. Instalar as dependências
-```bash
-pip install -r requirements.txt
-```
-
-### 4. Executar o Jupyter Notebook
-```bash
-jupyter notebook 06_01_Treino_Validacao_MNIST_Lightning_Lite.ipynb
-```
+* **Ambiente de Desenvolvimento:** Google Colaboratory / Antigravity IDE (Python 3.14 / Jupyter Kernel).
+* **Bibliotecas Principais:** `torch` & `torchvision` (construção e treinamento da rede neural), `scikit-learn` (métricas de avaliação, relatório de classificação e matriz de confusão), `numpy` (manipulação de tensores e arrays), `matplotlib` & `seaborn` (geração dos gráficos de perda, acurácia e inspeção visual de inferência).
+* **Assistência de IA (Antigravity / Gemini 3.7 Flash High):** Apoio na formulação dos gráficos comparativos, estruturação da classe modular SuperLight e documentação técnica em Markdown.
 
 ---
 
-## 📄 Licença
+## Como Executar
 
-Este projeto está distribuído sob a licença [MIT](LICENSE).
+1. **Clone este repositório:**
+   ```bash
+   git clone https://github.com/aj1no/DL_Atividade_06_MNIST_Lightning_Lite.git
+   cd DL_Atividade_06_MNIST_Lightning_Lite
+   ```
+
+2. **Crie e ative um ambiente virtual:**
+   ```bash
+   python -m venv venv
+   # No Windows:
+   .\venv\Scripts\activate
+   # No Linux/macOS:
+   source venv/bin/activate
+   ```
+
+3. **Instale as dependências:**
+   ```bash
+   pip install -r requirements.txt
+   ```
+
+4. **Inicie o Jupyter Notebook ou abra no Google Colab:**
+   ```bash
+   jupyter notebook 06_01_Treino_Validacao_MNIST_Lightning_Lite.ipynb
+   ```
+
+---
+
+## Licença
+
+Este projeto está sob a licença [MIT](LICENSE).
